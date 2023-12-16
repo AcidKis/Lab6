@@ -1,0 +1,11 @@
+# Создание Docker-образа
+docker build -t d_img .
+
+# Создание тома
+docker volume create d_vol
+
+# Запуск контейнера с томом
+docker run -d -p 5432:5432 --name d_cont -v d_vol:/var/lib/postgresql/data d_img
+
+# Команда для создания docker-контейнера с интерфейсом psql
+docker run -it --rm --name psql_container --link d_cont:postgres postgres psql -h postgres -p 5432 -U postgres
